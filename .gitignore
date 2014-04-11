@@ -1,6 +1,7 @@
 *~
 *.a
 *.o
+*.so
 spectrum
 *user
 *.moc

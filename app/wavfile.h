@@ -44,7 +44,8 @@
 
 #include <QtCore/qobject.h>
 #include <QtCore/qfile.h>
-#ifdef LINUX
+
+#ifdef Q_OS_UNIX
 #include <QtMultimediaKit/qaudioformat.h>
 #else
 #include <QtMultimedia/qaudioformat.h>

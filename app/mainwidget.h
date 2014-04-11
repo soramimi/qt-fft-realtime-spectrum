@@ -44,7 +44,7 @@
 #include <QWidget>
 #include <QIcon>
 
-#ifdef LINUX
+#ifdef Q_OS_LINUX
 #include <QtMultimediaKit/qaudio.h>
 #else
 #include <QtMultimedia/qaudio.h>

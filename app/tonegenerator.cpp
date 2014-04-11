@@ -42,7 +42,7 @@
 #include "utils.h"
 #include <QByteArray>
 
-#ifdef LINUX
+#ifdef Q_OS_UNIX
 #include <QtMultimediaKit/QAudioFormat>
 #else
 #include <QtMultimedia/QAudioFormat>

@@ -38,10 +38,11 @@
 **
 ****************************************************************************/
 
-#ifdef LINUX
-#include <QtMultimediaKit/QAudioFormat>
-#else
+
+#ifdef WIN32
 #include <QtMultimedia/QAudioFormat>
+#else
+#include <QtMultimediaKit/QAudioFormat>
 #endif
 
 #include "utils.h"

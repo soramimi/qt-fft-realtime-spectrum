@@ -50,13 +50,13 @@
 #include <QBuffer>
 #include <QVector>
 
-#ifdef LINUX
+#ifdef Q_OS_LINUX
 #include <QtMultimediaKit/QAudioDeviceInfo>
 #else
 #include <QtMultimedia/QAudioDeviceInfo>
 #endif
 
-#ifdef LINUX
+#ifdef Q_OS_LINUX
 #include <QtMultimediaKit/QAudioFormat>
 #else
 #include <QtMultimedia/QAudioFormat>

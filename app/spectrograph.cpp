@@ -120,6 +120,7 @@ void Spectrograph::paintEvent(QPaintEvent *event)
     gridPen.setDashPattern(dashes);
     painter.setPen(gridPen);
 
+    /*
     // Draw vertical lines between bars
     if (numBars) {
         const int numHorizontalSections = numBars;
@@ -137,6 +138,7 @@ void Spectrograph::paintEvent(QPaintEvent *event)
         line.translate(0, rect().height()/numVerticalSections);
         painter.drawLine(line);
     }
+    */
 
     barColor = barColor.lighter();
     barColor.setAlphaF(0.75);

@@ -48,13 +48,13 @@
 #include <QMetaObject>
 #include <QSet>
 
-#ifdef LINUX
+#ifdef Q_OS_LINUX
 #include <QtMultimediaKit/QAudioInput>
 #else
 #include <QtMultimedia/QAudioInput>
 #endif
 
-#ifdef LINUX
+#ifdef Q_OS_LINUX
 #include <QtMultimediaKit/QAudioOutput>
 #else
 #include <QtMultimedia/QAudioOutput>

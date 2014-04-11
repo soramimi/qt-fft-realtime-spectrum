@@ -44,7 +44,7 @@
 #include "spectrum.h"
 #include <QDialog>
 
-#ifdef LINUX
+#ifdef Q_OS_UNIX
 #include <QtMultimediaKit/QAudioDeviceInfo>
 #else
 #include <QtMultimedia/QAudioDeviceInfo>
