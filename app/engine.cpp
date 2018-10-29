@@ -81,8 +81,8 @@ const int    LevelWindowUs          = 0.1 * 1000000;
 
 QDebug& operator<<(QDebug &debug, const QAudioFormat &format)
 {
-    debug << format.frequency() << "Hz"
-          << format.channels() << "channels";
+//    debug << format.frequency() << "Hz"
+//          << format.channels() << "channels";
     return debug;
 }
 
@@ -528,9 +528,9 @@ bool Engine::initialize()
             emit errorMessage(tr("No common input / output format found"), "");
     }
 
-    ENGINE_DEBUG << "Engine::initialize" << "m_bufferLength" << m_bufferLength;
-    ENGINE_DEBUG << "Engine::initialize" << "m_dataLength" << m_dataLength;
-    ENGINE_DEBUG << "Engine::initialize" << "format" << m_format;
+//    ENGINE_DEBUG << "Engine::initialize" << "m_bufferLength" << m_bufferLength;
+//    ENGINE_DEBUG << "Engine::initialize" << "m_dataLength" << m_dataLength;
+//    ENGINE_DEBUG << "Engine::initialize" << "format" << m_format;
 
     return result;
 }
@@ -560,19 +560,19 @@ bool Engine::selectFormat()
     #endif
 
         if (!m_generateTone)
-            frequenciesList += m_audioInputDevice.supportedFrequencies();
+			frequenciesList += m_audioInputDevice.supportedSampleRates();
 
-        frequenciesList += m_audioOutputDevice.supportedFrequencies();
+		frequenciesList += m_audioOutputDevice.supportedSampleRates();
         frequenciesList = frequenciesList.toSet().toList(); // remove duplicates
         qSort(frequenciesList);
-        ENGINE_DEBUG << "Engine::initialize frequenciesList" << frequenciesList;
+//        ENGINE_DEBUG << "Engine::initialize frequenciesList" << frequenciesList;
 
         QList<int> channelsList;
-        channelsList += m_audioInputDevice.supportedChannels();
-        channelsList += m_audioOutputDevice.supportedChannels();
+		channelsList += m_audioInputDevice.supportedChannelCounts();
+		channelsList += m_audioOutputDevice.supportedChannelCounts();
         channelsList = channelsList.toSet().toList();
         qSort(channelsList);
-        ENGINE_DEBUG << "Engine::initialize channelsList" << channelsList;
+//        ENGINE_DEBUG << "Engine::initialize channelsList" << channelsList;
 
         QAudioFormat format;
         format.setByteOrder(QAudioFormat::LittleEndian);
@@ -583,15 +583,15 @@ bool Engine::selectFormat()
         foreach (frequency, frequenciesList) {
             if (foundSupportedFormat)
                 break;
-            format.setFrequency(frequency);
+			format.setSampleRate(frequency);
             foreach (channels, channelsList) {
-                format.setChannels(channels);
+				format.setChannelCount(channels);
                 const bool inputSupport = m_generateTone ||
                                           m_audioInputDevice.isFormatSupported(format);
                 const bool outputSupport = m_audioOutputDevice.isFormatSupported(format);
-                ENGINE_DEBUG << "Engine::initialize checking " << format
-                             << "input" << inputSupport
-                             << "output" << outputSupport;
+//                ENGINE_DEBUG << "Engine::initialize checking " << format
+//                             << "input" << inputSupport
+//                             << "output" << outputSupport;
                 if (inputSupport && outputSupport) {
                     foundSupportedFormat = true;
                     break;
@@ -726,7 +726,7 @@ void Engine::setFormat(const QAudioFormat &format)
     m_format = format;
     m_levelBufferLength = audioLength(m_format, LevelWindowUs);
     m_spectrumBufferLength = SpectrumLengthSamples *
-                            (m_format.sampleSize() / 8) * m_format.channels();
+							(m_format.sampleSize() / 8) * m_format.channelCount();
     if (changed)
         emit formatChanged(m_format);
 }

@@ -50,12 +50,12 @@
 qint64 audioDuration(const QAudioFormat &format, qint64 bytes)
 {
     return (bytes * 1000000) /
-        (format.frequency() * format.channels() * (format.sampleSize() / 8));
+		(format.sampleRate() * format.channelCount() * (format.sampleSize() / 8));
 }
 
 qint64 audioLength(const QAudioFormat &format, qint64 microSeconds)
 {
-   qint64 result = (format.frequency() * format.channels() * (format.sampleSize() / 8))
+   qint64 result = (format.sampleRate() * format.channelCount() * (format.sampleSize() / 8))
        * microSeconds / 1000000;
    result -= result % (format.channelCount() * format.sampleSize());
    return result;
@@ -63,7 +63,7 @@ qint64 audioLength(const QAudioFormat &format, qint64 microSeconds)
 
 qreal nyquistFrequency(const QAudioFormat &format)
 {
-    return format.frequency() / 2;
+	return format.sampleRate() / 2;
 }
 
 QString formatToString(const QAudioFormat &format)
@@ -93,8 +93,8 @@ QString formatToString(const QAudioFormat &format)
                 break;
             }
 
-            QString formatChannels = QString("%1 channels").arg(format.channels());
-            switch (format.channels()) {
+			QString formatChannels = QString("%1 channels").arg(format.channelCount());
+			switch (format.channelCount()) {
             case 1:
                 formatChannels = "mono";
                 break;
@@ -104,7 +104,7 @@ QString formatToString(const QAudioFormat &format)
             }
 
             result = QString("%1 Hz %2 bit %3 %4 %5")
-                .arg(format.frequency())
+				.arg(format.sampleRate())
                 .arg(format.sampleSize())
                 .arg(formatType)
                 .arg(formatEndian)

@@ -88,7 +88,7 @@ void Spectrograph::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
 
     QPainter painter(this);
-    painter.fillRect(rect(), Qt::black);
+	painter.fillRect(rect(), Qt::black);
 
     const int numBars = m_bars.count();
 
@@ -120,7 +120,7 @@ void Spectrograph::paintEvent(QPaintEvent *event)
     gridPen.setDashPattern(dashes);
     painter.setPen(gridPen);
 
-    /*
+	/*
     // Draw vertical lines between bars
     if (numBars) {
         const int numHorizontalSections = numBars;
@@ -138,7 +138,7 @@ void Spectrograph::paintEvent(QPaintEvent *event)
         line.translate(0, rect().height()/numVerticalSections);
         painter.drawLine(line);
     }
-    */
+	*/
 
     barColor = barColor.lighter();
     barColor.setAlphaF(0.75);
@@ -147,29 +147,27 @@ void Spectrograph::paintEvent(QPaintEvent *event)
     // Draw the bars
     if (numBars) {
         // Calculate width of bars and gaps
-        const int widgetWidth = rect().width();
-        const int barPlusGapWidth = widgetWidth / numBars;
-        const int barWidth = 0.8 * barPlusGapWidth;
-        const int gapWidth = barPlusGapWidth - barWidth;
-        const int paddingWidth = widgetWidth - numBars * (barWidth + gapWidth);
-        const int leftPaddingWidth = (paddingWidth + gapWidth) / 2;
-        const int barHeight = rect().height() - 2 * gapWidth;
+		double widgetWidth = rect().width();
+		double barPlusGapWidth = widgetWidth / numBars;
+		int barWidth = 1;//0.8 * barPlusGapWidth;
+		double gapWidth = barPlusGapWidth - barWidth;
+		int paddingWidth = 10;
+		double barHeight = rect().height() - 2 * gapWidth;
 
+		int x = paddingWidth;
         for (int i=0; i<numBars; ++i) {
             const qreal value = m_bars[i].value;
             Q_ASSERT(value >= 0.0 && value <= 1.0);
-            QRect bar = rect();
-            bar.setLeft(rect().left() + leftPaddingWidth + (i * (gapWidth + barWidth)));
-            bar.setWidth(barWidth);
-            bar.setTop(rect().top() + gapWidth + (1.0 - value) * barHeight);
-            bar.setBottom(rect().bottom() - gapWidth);
+			int x = paddingWidth + (width() - paddingWidth * 2) * i / (numBars - 1);
+			int h = value * barHeight;
+			QRect bar(x, height() - h, barWidth, h);
 
             QColor color = barColor;
             if (m_bars[i].clipped)
                 color = clipColor;
 
             painter.fillRect(bar, color);
-        }
+		}
     }
 }
 
